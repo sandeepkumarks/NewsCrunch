@@ -8,7 +8,8 @@ router.get('/news', scrapeArticles);
 router.get('/populate', populator);
 
 router.get('/test', function (req, res, next){
-  res.status(200).json({isSuccess: true});
+  // res.status(200).json({isSuccess: true});
+  res.render('index', {message:'Implemented scheduler and code revamp'});
 });
 
 module.exports = router;

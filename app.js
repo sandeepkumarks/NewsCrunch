@@ -1,13 +1,15 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var firebase = require('firebase')
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const firebase = require('firebase');
 
-var router = require('./routes/routes');
+const config = require('./utils/config');
+const { scrapingScheduler, cronTester } = require('./utils/cron');
+const routes = require('./routes/routes');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,7 +21,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', router);
+//Defining routes
+app.use('/', routes);
+
+//Calling scheduler function
+scrapingScheduler();
+// cronTester();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,16 +44,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var firebaseConfig = {
-  apiKey: "AIzaSyALzxm-y5LKpYvUoSiHirumKxsDMp4sIT8",
-  authDomain: "news-scraper-2421c.firebaseapp.com",
-  databaseURL: "https://news-scraper-2421c.firebaseio.com",
-  projectId: "news-scraper-2421c",
-  storageBucket: "news-scraper-2421c.appspot.com",
-  messagingSenderId: "34379054726",
-  appId: "1:34379054726:web:a49b4ac00b4096d7"
-};
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(config.firebase);
 
 module.exports = app;

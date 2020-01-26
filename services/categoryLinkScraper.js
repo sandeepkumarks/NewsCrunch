@@ -10,7 +10,7 @@ const categoriesList = [
   { name: 'Technology', value: 'technology', link: '' }
 ];
 
-const categoryLinkExtracter = async (requestCategory) => {
+module.exports = async (requestCategory) => {
   let index = categoriesList.findIndex(each => each.value === requestCategory);
   if (index === -1) {
     const error      = new Error('Invalid Category');
@@ -34,5 +34,3 @@ const categoryLinkExtracter = async (requestCategory) => {
     throw error;
   }
 }
-
-module.exports = categoryLinkExtracter;

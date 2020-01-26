@@ -1,7 +1,7 @@
 const $                       = require('cheerio');
 const puppeteer               = require('puppeteer');
 const googleNewsUrl           = 'https://www.news.google.com';
-const countLimit              = 2;
+const countLimit              = 10;
 const ignoreWebsites          = ['times of india'];
 const sourceSelector          = 'div > div > a';
 const headlineAndLinkSelector = 'h3 > a';
